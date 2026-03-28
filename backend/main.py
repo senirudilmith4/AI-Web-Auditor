@@ -7,6 +7,9 @@ from schemas.custom_types import AuditRequest, AuditResponse
 from web_scraper.scraper import scrape_metrics
 from ai.orchestrator import run_audit
 from pathlib import Path
+import sys
+
+sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 app = FastAPI(title="Website Audit Tool")
 
