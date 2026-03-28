@@ -3,13 +3,11 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
-from schemas.custom_types import AuditRequest, AuditResponse
+from backend.schemas.custom_types import AuditRequest, AuditResponse
 from web_scraper.scraper import scrape_metrics
 from ai.orchestrator import run_audit
 from pathlib import Path
-import sys
 
-sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 app = FastAPI(title="Website Audit Tool")
 
