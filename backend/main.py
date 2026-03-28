@@ -14,7 +14,7 @@ app = FastAPI(title="Website Audit Tool")
 # ── CORS — allows the frontend (different port) to call the API ───────────────
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],   # fine for a local demo/assessment
+    allow_origins=["*"],   
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -87,3 +87,5 @@ def get_logs():
             return {"logs": []}
 
     return {"logs": logs}
+
+
