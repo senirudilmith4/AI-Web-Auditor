@@ -1,6 +1,6 @@
 // interface/app.js
+const API_BASE = window.location.origin;
 
-const API_BASE = "http://localhost:8000";
 
 // DOM refs
 const urlInput  = document.getElementById("urlInput");
