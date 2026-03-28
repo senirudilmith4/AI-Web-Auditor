@@ -7,7 +7,7 @@ A lightweight internal tool that accepts a single URL, extracts factual page met
 
 ## Live Demo
 
-🔗 **[SiteScopeAI.onrender.com]([https://ai-web-auditor.onrender.com])**
+🔗 **[SiteScopeAI.onrender.com](https://ai-web-auditor.onrender.com)**
 
 > Note: Render free-tier instances spin down after inactivity. The first request may take 30–60 seconds to wake up.
 
