@@ -7,7 +7,7 @@ A lightweight internal tool that accepts a single URL, extracts factual page met
 
 ## Live Demo
 
-🔗 **[pageaudit.onrender.com](https://pageaudit.onrender.com)**
+🔗 **[SiteScopeAI.onrender.com](https://ai-web-auditor.onrender.com)**
 
 > Note: Render free-tier instances spin down after inactivity. The first request may take 30–60 seconds to wake up.
 
@@ -80,7 +80,6 @@ Get a free key at [aistudio.google.com](https://aistudio.google.com).
 ### 5. Run the server
 
 ```bash
-cd backend
 uvicorn backend.main:app --reload --port 8000
 ```
 
