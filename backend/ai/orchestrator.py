@@ -4,6 +4,7 @@ from datetime import datetime
 from pathlib import Path
 from dotenv import load_dotenv
 from google import genai
+from google.genai import types
 
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
@@ -161,13 +162,15 @@ def run_audit(metrics: dict) -> dict:
     # Call Gemini
     try:
         response = client.models.generate_content(
+            model=model,
             contents=user_prompt,
-            system_instruction=SYSTEM_PROMPT,
-            generation_config=genai.GenerationConfig(
-                temperature=0.4,        # low = more factual, less creative
-                max_output_tokens=1500,
+            config=types.GenerateContentConfig(
+                system_instruction=SYSTEM_PROMPT,
+                temperature=0.4,
+                max_output_tokens=4000,
             )
         )
+                
         raw_response = response.text
 
     except Exception as e:
@@ -192,9 +195,12 @@ def parse_ai_response(raw: str) -> dict:
     # Strip whitespace and remove markdown code fences if present
     cleaned = raw.strip()
     if cleaned.startswith("```"):
-        lines = cleaned.splitlines()
-        # Remove first and last fence lines
-        cleaned = "\n".join(lines[1:-1]).strip()
+        # Remove the opening fence line (e.g. ```json)
+        cleaned = cleaned.split("\n", 1)[1]
+        # Remove the closing fence if present
+        if cleaned.strip().endswith("```"):
+            cleaned = cleaned.rsplit("```", 1)[0]
+        cleaned = cleaned.strip()
 
     try:
         parsed = json.loads(cleaned)

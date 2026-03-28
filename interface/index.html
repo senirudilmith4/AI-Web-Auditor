@@ -11,17 +11,16 @@
 
 <body>
 
-  <!-- ── HEADER ─────────────────────────────────────────────── -->
   <header class="header">
     <div class="header-inner">
       <div class="logo">
-        <span class="logo-bracket">[</span>PAGE<span class="logo-accent">AUDIT</span><span class="logo-bracket">]</span>
+        <span class="logo-bracket"></span>SiteScope<span class="logo-accent">AI</span><span class="logo-bracket"></span>
       </div>
       <p class="header-sub">AI-powered website analysis · SEO · CRO · UX</p>
     </div>
   </header>
 
-  <!-- ── INPUT SECTION ──────────────────────────────────────── -->
+
   <section class="input-section">
     <div class="input-card">
       <label class="input-label">ENTER URL TO AUDIT</label>
@@ -43,7 +42,6 @@
     </div>
   </section>
 
-  <!-- ── LOADER ─────────────────────────────────────────────── -->
   <div id="loader" class="loader hidden">
     <div class="loader-inner">
       <div class="loader-bar">
@@ -53,16 +51,11 @@
     </div>
   </div>
 
-  <!-- ── RESULTS ────────────────────────────────────────────── -->
   <main id="results" class="results hidden">
-
-    <!-- Audited URL badge -->
     <div class="results-header">
       <span class="results-label">AUDIT RESULTS FOR</span>
       <span class="results-url" id="auditedUrl"></span>
     </div>
-
-    <!-- ── METRICS GRID ──────────────────────────────────────── -->
     <section class="section">
       <div class="section-header">
         <span class="section-tag">01</span>
@@ -71,8 +64,6 @@
       </div>
 
       <div class="metrics-grid">
-
-        <!-- Meta -->
         <div class="metric-card wide">
           <div class="metric-label">META TITLE</div>
           <div class="metric-value text" id="metaTitle">—</div>
@@ -81,8 +72,6 @@
           <div class="metric-label">META DESCRIPTION</div>
           <div class="metric-value text" id="metaDesc">—</div>
         </div>
-
-        <!-- Numbers -->
         <div class="metric-card">
           <div class="metric-label">WORD COUNT</div>
           <div class="metric-value big" id="wordCount">—</div>
@@ -100,8 +89,6 @@
           <div class="metric-value big" id="missingAlt">—</div>
           <div class="metric-sub" id="missingAltPct"></div>
         </div>
-
-        <!-- Headings -->
         <div class="metric-card">
           <div class="metric-label">HEADINGS</div>
           <div class="heading-breakdown">
@@ -119,8 +106,6 @@
             </div>
           </div>
         </div>
-
-        <!-- Links -->
         <div class="metric-card">
           <div class="metric-label">LINKS</div>
           <div class="heading-breakdown">
@@ -137,8 +122,6 @@
 
       </div>
     </section>
-
-    <!-- ── AI INSIGHTS ───────────────────────────────────────── -->
     <section class="section">
       <div class="section-header">
         <span class="section-tag">02</span>
@@ -174,8 +157,6 @@
         </div>
       </div>
     </section>
-
-    <!-- ── RECOMMENDATIONS ───────────────────────────────────── -->
     <section class="section">
       <div class="section-header">
         <span class="section-tag">03</span>
@@ -186,8 +167,6 @@
     </section>
 
   </main>
-
-  <!-- ── FOOTER ─────────────────────────────────────────────── -->
   <footer class="footer">
     <span>PageAudit · Powered by Gemini 2.5 Flash</span>
     <a href="http://localhost:8000/logs" target="_blank" class="logs-link">View Prompt Logs →</a>

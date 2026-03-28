@@ -2,7 +2,7 @@
 
 const API_BASE = "http://localhost:8000";
 
-// ── DOM refs ──────────────────────────────────────────────────────────────────
+// DOM refs
 const urlInput  = document.getElementById("urlInput");
 const auditBtn  = document.getElementById("auditBtn");
 const errorMsg  = document.getElementById("errorMsg");
@@ -10,7 +10,7 @@ const loader    = document.getElementById("loader");
 const loaderText = document.getElementById("loaderText");
 const results   = document.getElementById("results");
 
-// ── Loader messages to cycle through while waiting ───────────────────────────
+// Loader messages to cycle through while waiting 
 const LOADER_STEPS = [
   "Fetching page...",
   "Extracting metrics...",
@@ -38,7 +38,7 @@ function stopLoader() {
   loader.classList.add("hidden");
 }
 
-// ── Error helpers ─────────────────────────────────────────────────────────────
+// Error helpers 
 function showError(msg) {
   errorMsg.textContent = msg;
   errorMsg.classList.remove("hidden");
@@ -49,7 +49,7 @@ function hideError() {
   errorMsg.textContent = "";
 }
 
-// ── Safely set text content (fallback to "—") ─────────────────────────────────
+//  Safely set text content (fallback to "—") 
 function setText(id, value) {
   const el = document.getElementById(id);
   if (!el) return;
@@ -58,7 +58,7 @@ function setText(id, value) {
     : "—";
 }
 
-// ── Render metrics panel ──────────────────────────────────────────────────────
+// Render metrics panel 
 function renderMetrics(data) {
   document.getElementById("auditedUrl").textContent = data.url;
 
@@ -90,7 +90,7 @@ function renderMetrics(data) {
   setText("externalLinks", data.links.external_count);
 }
 
-// ── Render AI insights ────────────────────────────────────────────────────────
+// Render AI insights 
 function renderInsights(insights) {
   setText("insightSeo",     insights.seo_structure);
   setText("insightMsg",     insights.messaging_clarity);
@@ -99,7 +99,7 @@ function renderInsights(insights) {
   setText("insightUx",      insights.ux_structure);
 }
 
-// ── Render recommendations ────────────────────────────────────────────────────
+// Render recommendations
 function renderRecommendations(recs) {
   const list = document.getElementById("recsList");
   list.innerHTML = "";
@@ -121,7 +121,6 @@ function renderRecommendations(recs) {
     });
 }
 
-// ── Basic HTML escape to prevent XSS from AI output ──────────────────────────
 function escapeHtml(str) {
   return String(str)
     .replace(/&/g, "&amp;")
@@ -130,7 +129,7 @@ function escapeHtml(str) {
     .replace(/"/g, "&quot;");
 }
 
-// ── Main audit function ───────────────────────────────────────────────────────
+// Main audit function 
 async function runAudit() {
   const url = urlInput.value.trim();
 
@@ -179,7 +178,7 @@ async function runAudit() {
   }
 }
 
-// ── Event listeners ───────────────────────────────────────────────────────────
+// Event listeners 
 auditBtn.addEventListener("click", runAudit);
 
 // Allow Enter key to trigger audit
