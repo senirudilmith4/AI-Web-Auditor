@@ -1,5 +1,6 @@
 import os
 import json
+from datetime import datetime
 from pathlib import Path
 from dotenv import load_dotenv
 from google import genai
@@ -8,6 +9,7 @@ load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 
 client = genai.Client(api_key=api_key)
+model="gemini-2.5-flash"
 
 try:
     # API test to verify key and model access
@@ -117,3 +119,98 @@ as valid JSON matching the schema provided in your instructions.
 """.strip()
 
     return user_prompt, structured_metrics  
+
+
+# 3. PROMPT LOGGING
+def save_prompt_log(url: str, user_prompt: str, raw_response: str, structured_metrics: dict):
+ 
+    """
+    Saves the full prompt trace to logs/prompt_logs.json.
+
+    """
+
+    log_entry = {
+        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "url": url,
+        "system_prompt": SYSTEM_PROMPT,
+        "structured_inputs": structured_metrics,
+        "user_prompt": user_prompt,
+        "raw_model_output": raw_response,
+    }
+
+    # Load existing logs if file exists
+    if LOGS_PATH.exists():
+        with open(LOGS_PATH, "r") as f:
+            try:
+                logs = json.load(f)
+            except json.JSONDecodeError:
+                logs = []
+    else:
+        logs = []
+
+    logs.append(log_entry)
+
+    with open(LOGS_PATH, "w") as f:
+        json.dump(logs, f, indent=2)
+
+
+
+# 4. MAIN ORCHESTRATOR FUNCTION
+def run_audit(metrics: dict) -> dict:
+
+    """
+    Takes raw scraper output, runs AI analysis, returns structured result.
+
+    """
+
+    # Build user prompt with structured metrics
+    user_prompt, structured_metrics = build_user_prompt(metrics)
+
+    # Call Gemini
+    try:
+        response = model.generate_content(
+            contents=user_prompt,
+            system_instruction=SYSTEM_PROMPT,
+            generation_config=genai.GenerationConfig(
+                temperature=0.4,        # low = more factual, less creative
+                max_output_tokens=1500,
+            )
+        )
+        raw_response = response.text
+
+    except Exception as e:
+        raise RuntimeError(f"Gemini API call failed: {e}")
+
+    # Log the prompt and response for transparency and debugging
+    save_prompt_log(metrics["url"], user_prompt, raw_response, structured_metrics)
+
+    
+    ai_result = parse_ai_response(raw_response)
+
+    return ai_result
+
+
+# 5. RESPONSE PARSER
+def parse_ai_response(raw: str) -> dict:
+    """
+    Parses Gemini's raw text output into a clean Python dict.
+    Handles the case where the model wraps JSON in markdown code fences.
+    """
+
+    # Strip whitespace and remove markdown code fences if present
+    cleaned = raw.strip()
+    if cleaned.startswith("```"):
+        lines = cleaned.splitlines()
+        # Remove first and last fence lines
+        cleaned = "\n".join(lines[1:-1]).strip()
+
+    try:
+        parsed = json.loads(cleaned)
+    except json.JSONDecodeError as e:
+        raise ValueError(f"AI response was not valid JSON: {e}\nRaw output:\n{raw}")
+
+    # Validate expected keys exist
+    if "insights" not in parsed or "recommendations" not in parsed:
+        raise ValueError(f"AI response missing required keys. Got: {list(parsed.keys())}")
+
+    return parsed
