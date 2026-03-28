@@ -1,4 +1,5 @@
 import requests
+import certifi
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urljoin
 
@@ -23,7 +24,7 @@ def scrape_metrics(url: str) -> dict:
     }
 
     try:
-        response = requests.get(url, headers=headers, timeout=10)
+        response = requests.get(url, headers=headers, timeout=10, verify=certifi.where())
         response.raise_for_status()
     except requests.exceptions.RequestException as e:
         raise ValueError(f"Failed to fetch URL: {e}")
@@ -128,3 +129,5 @@ def scrape_metrics(url: str) -> dict:
         # This goes to the AI only, not displayed as a metric
         "_page_text": page_text_for_ai,
     }
+
+
