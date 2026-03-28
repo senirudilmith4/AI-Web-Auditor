@@ -85,7 +85,7 @@ body {
   letter-spacing: 0.08em;
 }
 
-/* ── INPUT SECTION ───────────────────────────────────────────────── */
+/* INPUT SECTION  */
 .input-section {
   max-width: 1200px;
   margin: 56px auto 0;
@@ -192,7 +192,7 @@ body {
   font-weight: 500;
 }
 
-/* ── LOADER ──────────────────────────────────────────────────────── */
+/* LOADER ]*/
 .loader {
   max-width: 1200px;
   margin: 40px auto 0;
@@ -238,7 +238,7 @@ body {
   margin-top: 16px;
 }
 
-/* ── RESULTS ─────────────────────────────────────────────────────── */
+/*  RESULTS */
 .results {
   max-width: 1200px;
   margin: 48px auto 80px;
@@ -280,7 +280,7 @@ body {
   border: 1px solid rgba(0,229,255,0.2);
 }
 
-/* ── SECTION ─────────────────────────────────────────────────────── */
+/* SECTION */
 .section-header {
   display: flex;
   align-items: center;
@@ -316,7 +316,7 @@ body {
   letter-spacing: 0.04em;
 }
 
-/* ── METRICS GRID ────────────────────────────────────────────────── */
+/* METRICS GRID  */
 .metrics-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -403,7 +403,7 @@ body {
   color: var(--text);
 }
 
-/* ── INSIGHTS GRID ───────────────────────────────────────────────── */
+/* INSIGHTS GRID  */
 .insights-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -465,7 +465,7 @@ body {
   font-weight: 400;
 }
 
-/* ── RECOMMENDATIONS ─────────────────────────────────────────────── */
+/* RECOMMENDATIONS */
 .recs-list {
   display: flex;
   flex-direction: column;
@@ -528,7 +528,7 @@ body {
   font-weight: 400;
 }
 
-/* ── FOOTER ──────────────────────────────────────────────────────── */
+/* FOOTER  */
 .footer {
   border-top: 1px solid var(--border);
   padding: 20px 40px;
@@ -552,10 +552,10 @@ body {
 
 .logs-link:hover { opacity: 0.6; }
 
-/* ── UTILITIES ───────────────────────────────────────────────────── */
+/* UTILITIES */
 .hidden { display: none !important; }
 
-/* ── RESPONSIVE ──────────────────────────────────────────────────── */
+/*  RESPONSIVE  */
 @media (max-width: 900px) {
   .metrics-grid { grid-template-columns: repeat(2, 1fr); }
   .metric-card.wide { grid-column: span 2; }
