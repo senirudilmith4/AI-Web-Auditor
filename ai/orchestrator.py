@@ -67,3 +67,53 @@ Your response must follow this exact JSON schema:
 
 Provide exactly 4 recommendations, ordered by priority (1 = most critical).
 """.strip()
+
+
+# 2. USER PROMPT BUILDER
+def build_user_prompt(metrics: dict) -> str:
+    """
+    Constructs the user prompt by injecting structured metrics into a template.
+    The AI receives clean JSON data — not raw HTML or unstructured text.
+    """
+
+    # Extract the page text sample for AI context (capped at 3000 words to avoid token limits)
+    page_text = metrics.get("_page_text", "")
+
+    # Re-structure the metrics into a clean JSON format for the AI, ensuring all relevant data is included
+    structured_metrics = {
+        "url": metrics["url"],
+        "meta_title": metrics["meta"]["title"],
+        "meta_description": metrics["meta"]["description"],
+        "headings": {
+            "h1_count": metrics["headings"]["h1_count"],
+            "h1_texts": metrics["headings"]["h1"],
+            "h2_count": metrics["headings"]["h2_count"],
+            "h3_count": metrics["headings"]["h3_count"],
+        },
+        "word_count": metrics["content"]["word_count"],
+        "images": {
+            "total": metrics["images"]["total"],
+            "missing_alt_count": metrics["images"]["missing_alt"],
+            "pct_missing_alt": metrics["images"]["pct_missing_alt"],
+        },
+        "links": {
+            "internal": metrics["links"]["internal_count"],
+            "external": metrics["links"]["external_count"],
+        },
+        "cta_count": metrics["ctas"]["total"],
+    }
+
+    user_prompt = f"""
+Please audit the following webpage.
+
+## Extracted Metrics (factual, do not alter): 
+{json.dumps(structured_metrics, indent=2)}
+
+## Page Content Sample (first ~3000 words of visible text):
+{page_text}
+
+Using the metrics and content above, generate your structured audit response 
+as valid JSON matching the schema provided in your instructions.
+""".strip()
+
+    return user_prompt, structured_metrics  
