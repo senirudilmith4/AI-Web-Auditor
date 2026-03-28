@@ -1,4 +1,4 @@
-// interface/app.js
+
 const API_BASE = window.location.origin;
 
 
