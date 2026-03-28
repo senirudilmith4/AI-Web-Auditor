@@ -6,8 +6,6 @@ venv/
 __pycache__/
 *.pyc
 
-# Jupyter Notebook checkpoints
-.ipynb_checkpoints/
 
 # Environment variables
 .env
@@ -18,3 +16,5 @@ __pycache__/
 # OS files
 .DS_Store
 Thumbs.db
+
+test/

@@ -4,7 +4,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from schemas.custom_types import AuditRequest, AuditResponse
-
 from web_scraper.scraper import scrape_metrics
 from ai.orchestrator import run_audit
 from pathlib import Path
@@ -20,8 +19,8 @@ app.add_middleware(
 )
 
 # Serve frontend static files 
-BASE_DIR = Path(__file__).resolve().parent.parent
-app.mount("/static", StaticFiles(directory=BASE_DIR / "frontend"), name="static")
+BASE_DIR = Path(__file__).parent.parent
+app.mount("/static", StaticFiles(directory=BASE_DIR / "interface"), name="static")
 
 
 
@@ -30,7 +29,7 @@ app.mount("/static", StaticFiles(directory=BASE_DIR / "frontend"), name="static"
 @app.get("/")
 def serve_frontend():
     """Serves the frontend dashboard."""
-    return FileResponse(BASE_DIR / "frontend" / "index.html")
+    return FileResponse(BASE_DIR / "interface" / "index.html")
 
 
 @app.post("/audit", response_model=AuditResponse)

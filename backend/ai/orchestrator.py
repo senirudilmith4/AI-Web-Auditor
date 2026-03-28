@@ -11,15 +11,7 @@ api_key = os.getenv("GEMINI_API_KEY")
 client = genai.Client(api_key=api_key)
 model="gemini-2.5-flash"
 
-try:
-    # API test to verify key and model access
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents="Hi"
-    )
-    print("✅ API key works! Model responded:", response.text)
-except Exception as e:
-    print("❌ API key or model issue:", e)
+
 
 LOGS_PATH = Path(__file__).parent.parent / "logs" / "prompt_logs.json"
 LOGS_PATH.parent.mkdir(exist_ok=True)
@@ -168,7 +160,7 @@ def run_audit(metrics: dict) -> dict:
 
     # Call Gemini
     try:
-        response = model.generate_content(
+        response = client.models.generate_content(
             contents=user_prompt,
             system_instruction=SYSTEM_PROMPT,
             generation_config=genai.GenerationConfig(

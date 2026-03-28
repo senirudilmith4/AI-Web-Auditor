@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PageAudit — AI Website Analyzer</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- ── HEADER ─────────────────────────────────────────────── -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-bracket">[</span>PAGE<span class="logo-accent">AUDIT</span><span class="logo-bracket">]</span>
+      </div>
+      <p class="header-sub">AI-powered website analysis · SEO · CRO · UX</p>
+    </div>
+  </header>
+
+  <!-- ── INPUT SECTION ──────────────────────────────────────── -->
+  <section class="input-section">
+    <div class="input-card">
+      <label class="input-label">ENTER URL TO AUDIT</label>
+      <div class="input-row">
+        <input
+          type="url"
+          id="urlInput"
+          class="url-input"
+          placeholder="https://example.com"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button id="auditBtn" class="audit-btn">
+          <span class="btn-text">RUN AUDIT</span>
+          <span class="btn-arrow">→</span>
+        </button>
+      </div>
+      <p id="errorMsg" class="error-msg hidden"></p>
+    </div>
+  </section>
+
+  <!-- ── LOADER ─────────────────────────────────────────────── -->
+  <div id="loader" class="loader hidden">
+    <div class="loader-inner">
+      <div class="loader-bar">
+        <div class="loader-fill"></div>
+      </div>
+      <p class="loader-text" id="loaderText">Fetching page...</p>
+    </div>
+  </div>
+
+  <!-- ── RESULTS ────────────────────────────────────────────── -->
+  <main id="results" class="results hidden">
+
+    <!-- Audited URL badge -->
+    <div class="results-header">
+      <span class="results-label">AUDIT RESULTS FOR</span>
+      <span class="results-url" id="auditedUrl"></span>
+    </div>
+
+    <!-- ── METRICS GRID ──────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-tag">01</span>
+        <h2 class="section-title">FACTUAL METRICS</h2>
+        <span class="section-note">Extracted directly — no AI involvement</span>
+      </div>
+
+      <div class="metrics-grid">
+
+        <!-- Meta -->
+        <div class="metric-card wide">
+          <div class="metric-label">META TITLE</div>
+          <div class="metric-value text" id="metaTitle">—</div>
+        </div>
+        <div class="metric-card wide">
+          <div class="metric-label">META DESCRIPTION</div>
+          <div class="metric-value text" id="metaDesc">—</div>
+        </div>
+
+        <!-- Numbers -->
+        <div class="metric-card">
+          <div class="metric-label">WORD COUNT</div>
+          <div class="metric-value big" id="wordCount">—</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">TOTAL CTAs</div>
+          <div class="metric-value big" id="ctaCount">—</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">TOTAL IMAGES</div>
+          <div class="metric-value big" id="imageCount">—</div>
+        </div>
+        <div class="metric-card highlight-warn">
+          <div class="metric-label">MISSING ALT TEXT</div>
+          <div class="metric-value big" id="missingAlt">—</div>
+          <div class="metric-sub" id="missingAltPct"></div>
+        </div>
+
+        <!-- Headings -->
+        <div class="metric-card">
+          <div class="metric-label">HEADINGS</div>
+          <div class="heading-breakdown">
+            <div class="heading-row">
+              <span class="heading-tag">H1</span>
+              <span class="heading-count" id="h1Count">—</span>
+            </div>
+            <div class="heading-row">
+              <span class="heading-tag">H2</span>
+              <span class="heading-count" id="h2Count">—</span>
+            </div>
+            <div class="heading-row">
+              <span class="heading-tag">H3</span>
+              <span class="heading-count" id="h3Count">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Links -->
+        <div class="metric-card">
+          <div class="metric-label">LINKS</div>
+          <div class="heading-breakdown">
+            <div class="heading-row">
+              <span class="heading-tag">INT</span>
+              <span class="heading-count" id="internalLinks">—</span>
+            </div>
+            <div class="heading-row">
+              <span class="heading-tag">EXT</span>
+              <span class="heading-count" id="externalLinks">—</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── AI INSIGHTS ───────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-tag">02</span>
+        <h2 class="section-title">AI INSIGHTS</h2>
+        <span class="section-note">Generated by Gemini · grounded in metrics above</span>
+      </div>
+
+      <div class="insights-grid">
+        <div class="insight-card">
+          <div class="insight-icon">⌖</div>
+          <div class="insight-label">SEO STRUCTURE</div>
+          <p class="insight-text" id="insightSeo">—</p>
+        </div>
+        <div class="insight-card">
+          <div class="insight-icon">◎</div>
+          <div class="insight-label">MESSAGING CLARITY</div>
+          <p class="insight-text" id="insightMsg">—</p>
+        </div>
+        <div class="insight-card">
+          <div class="insight-icon">⊕</div>
+          <div class="insight-label">CTA USAGE</div>
+          <p class="insight-text" id="insightCta">—</p>
+        </div>
+        <div class="insight-card">
+          <div class="insight-icon">≡</div>
+          <div class="insight-label">CONTENT DEPTH</div>
+          <p class="insight-text" id="insightContent">—</p>
+        </div>
+        <div class="insight-card wide">
+          <div class="insight-icon">⬡</div>
+          <div class="insight-label">UX / STRUCTURE</div>
+          <p class="insight-text" id="insightUx">—</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── RECOMMENDATIONS ───────────────────────────────────── -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-tag">03</span>
+        <h2 class="section-title">RECOMMENDATIONS</h2>
+        <span class="section-note">Prioritized · actionable · tied to metrics</span>
+      </div>
+      <div class="recs-list" id="recsList"></div>
+    </section>
+
+  </main>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer class="footer">
+    <span>PageAudit · Powered by Gemini 2.5 Flash</span>
+    <a href="http://localhost:8000/logs" target="_blank" class="logs-link">View Prompt Logs →</a>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
