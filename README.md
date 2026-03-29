@@ -32,7 +32,6 @@ WebAuditor/
 │   ├── index.html           # Single-page dashboard
 │   ├── style.css            # Styling
 │   └── app.js               # Fetch, render, error handling
-├── .env                     # GEMINI_API_KEY (not committed)
 ├── requirements.txt
 ├── run.py
 └── README.md
